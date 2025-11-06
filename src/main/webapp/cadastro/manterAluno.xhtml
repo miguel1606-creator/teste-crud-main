@@ -1,74 +1,65 @@
-<ui:composition
-  template="/WEB-INF/template/LayoutPadrao.xhtml"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://xmlns.jcp.org/jsf/html"
-  xmlns:f="http://xmlns.jcp.org/jsf/core"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-  xmlns:p="http://primefaces.org/ui">
-  
-  <ui:define name="titulo">Teste</ui:define>
-  
-  <ui:define name="corpo">
-  
-	<h:form id="formulario">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
-		<h1>Aluno</h1>
+	<ui:define name="titulo">Teste</ui:define>
 
-		<p:growl id="growl" showDetail="false" />
+	<ui:define name="corpo">
+
+		<h:form id="formulario">
+
+			<h1>Aluno</h1>
+
+			<p:growl id="growl" showDetail="false" />
 
 			<p:toolbar style="margin-top: 20px">
 				<p:toolbarGroup>
-					<p:commandButton icon="pi pi-plus" value="Novo" id="botaoNovo" 
-						oncomplete="PF('editarDialogWidgetVar').show()"
-		            	update="editarDialog"		            	
-		            	process="@this"/>
+					<p:commandButton icon="pi pi-plus" value="Novo" id="botaoNovo"
+						oncomplete="PF('editarDialogWidgetVar').show()" update="editarDialog" process="@this" />
 				</p:toolbarGroup>
 			</p:toolbar>
-			
-			<p:dataTable id="alunosTable" var="aluno" value="#{manterAlunoBean.alunos}"
-				lazy="false" showGridlines="true"
-	    		style="margin-top: 20px" emptyMessage="Nenhum aluno encontrado." rows="10"
-	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
-	    		rowsPerPageTemplate="5,10,15">		
+
+			<p:dataTable id="alunosTable" var="aluno" value="#{manterAlunoBean.alunos}" lazy="false"
+				showGridlines="true" style="margin-top: 20px" emptyMessage="Nenhum aluno encontrado." rows="10"
+				paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
 
 				<p:column headerText="Id">
 					<h:outputText value="#{aluno.id}" />
-				</p:column>	
+				</p:column>
 
-				<p:column headerText="Nome"
-					filterBy="#{aluno.nome}" sortBy="#{aluno.salario}">
+				<p:column headerText="Nome" filterBy="#{aluno.nome}" sortBy="#{aluno.salario}">
 					<h:outputText value="#{aluno.nome}" />
-				</p:column>		
-				
-				<p:column headerText="Sobrenome">
-					<h:outputText value="#{aluno.sobrenome}" />
-				</p:column>		
+				</p:column>
 
 				<p:column headerText="Pront">
 					<h:outputText value="#{aluno.prontuario}" />
-				</p:column>		
+				</p:column>
 
-				<p:column headerText="Frase">
-					<h:outputText value="#{aluno.frase}" />
-				</p:column>	
+				<p:column headerText="Salario">
+					<h:outputText value="#{aluno.salario}" />
+				</p:column>
 
-				
+				<p:column headerText="Telefone">
+					<h:outputText value="#{aluno.telefone}" />
+				</p:column>
 
-				<p:column headerText="Operações">					
-					
-					<p:commandButton id="cb1" icon="pi pi-pencil" title="Editar"	    				
-		            	oncomplete="PF('editarDialogWidgetVar').show()"
-		            	update=":formulario:editarDialog"		            	
-		            	process="@this">
-		            	<f:setPropertyActionListener target="#{manterAlunoBean.aluno}" 
-							value="#{aluno}" />
-	            	</p:commandButton>
+                <p:column headerText="Datanascimento">
+					<h:outputText value="#{aluno.datanascimento}" />
+					    <f:converterDateTime pattern="dd/MM/yyyy">
+		        	</h:outputText>
+				</p:column>
 
-					<p:commandButton icon="pi pi-trash"  title="Excluir"
-						onclick="PF('confirmacaoExclusao').show();"
-						process="@this"	>
-						<f:setPropertyActionListener target="#{manterAlunoBean.aluno}"
-							value="#{aluno}" />
+				<p:column headerText="Operações">
+
+					<p:commandButton id="cb1" icon="pi pi-pencil" title="Editar"
+						oncomplete="PF('editarDialogWidgetVar').show()" update=":formulario:editarDialog"
+						process="@this">
+						<f:setPropertyActionListener target="#{manterAlunoBean.aluno}" value="#{aluno}" />
+					</p:commandButton>
+
+					<p:commandButton icon="pi pi-trash" title="Excluir" onclick="PF('confirmacaoExclusao').show();"
+						process="@this">
+						<f:setPropertyActionListener target="#{manterAlunoBean.aluno}" value="#{aluno}" />
 					</p:commandButton>
 				</p:column>
 
@@ -76,54 +67,52 @@
 
 
 
-	<p:dialog id="editarDialog" header="Aluno" widgetVar="editarDialogWidgetVar"
-				modal="true" resizable="true" closeOnEscape="true"
-				showEffect="explode" hideEffect="explode" 
-				width="100%" position="center top" maximizable="true"
-				height="70%" fitViewport="true" responsive="true">
+			<p:dialog id="editarDialog" header="Aluno" widgetVar="editarDialogWidgetVar" modal="true" resizable="true"
+				closeOnEscape="true" showEffect="explode" hideEffect="explode" width="100%" position="center top"
+				maximizable="true" height="70%" fitViewport="true" responsive="true">
 
-		<p:panelGrid id="grid" columns="2">
+				<p:panelGrid id="grid" columns="2">
 
-			<p:outputLabel for="id" value="Id: " />
-			<p:outputLabel id="id" value="#{manterAlunoBean.aluno.id}" />
+					<p:outputLabel for="id" value="Id: " />
+					<p:outputLabel id="id" value="#{manterAlunoBean.aluno.id}" />
 
-			<p:outputLabel for="Pront" value="Prontuario: " />
-			<p:inputText id="Pront" value="#{manterAlunoBean.aluno.prontuario}" />
+					<p:outputLabel for="Pront" value="Prontuario: " />
+					<p:inputText id="Pront" value="#{manterAlunoBean.aluno.prontuario}" />
 
-			
-			<p:outputLabel for="nome" value="Nome: " />
-			<p:inputText id="nome" value="#{manterAlunoBean.aluno.nome}" />
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" value="#{manterAlunoBean.aluno.nome}" />
 
-			<p:outputLabel for="sobre" value="sobrenome: " />
-			<p:inputText id="sobre" value="#{manterAlunoBean.aluno.sobrenome}" />
+					<p:outputLabel for="telefone" value="Telefone: " />
+                    <p:inputMask id="telefone" value="#{manterAlunoBean.aluno.telefone}" mask="(99) 99999-9999" validateMask="true" />
 
-			
+					<p:outputLabel for="salario" value="Salario: " />
+					<p:inputNumber id="salario" value="#{manterAlunoBean.aluno.salario}" symbol="R$ " symbolPosition="p"
+						decimalSeparator="," thousandSeparator="." />
+					
+                    <p:outputLabel for="datanascimento" value="Datanascimento: " />
+                    <p:inputMask id="datanascimento" value="#{manterAlunoBean.aluno.datanascimento}" mask="99/99/9999" />
+					    <f:converterDateTime pattern="dd/MM/yyyy" />
+	   	            </p:inputMask>
 
-			<p:commandButton icon="pi pi-save" id="salvarButton"
-				value="Salvar" title="Grava dados do aluno"
-				actionListener="#{manterAlunoBean.salvar}"
-				oncomplete="if (!args.validationFailed) PF('editarDialogWidgetVar').hide()"
-				update="growl alunosTable" process="@this grid">
-			</p:commandButton>						
-			
-		</p:panelGrid>
+					<p:commandButton icon="pi pi-save" id="salvarButton" value="Salvar" title="Grava dados do aluno"
+						actionListener="#{manterAlunoBean.salvar}"
+						oncomplete="if (!args.validationFailed) PF('editarDialogWidgetVar').hide()"
+						update="growl alunosTable" process="@this grid">
+					</p:commandButton>
 
-	</p:dialog>
-	
-	<p:confirmDialog id="confirmacaoExclusaoDialog"
-				widgetVar="confirmacaoExclusao"
-				message="Tem certeza que deseja excluir o aluno #{manterAlçunoBean.aluno.nome}?"
+				</p:panelGrid>
+
+			</p:dialog>
+
+			<p:confirmDialog id="confirmacaoExclusaoDialog" widgetVar="confirmacaoExclusao"
+				message="Tem certeza que deseja excluir o aluno #{manterAlunoBean.aluno.nome}?"
 				header="Exclusão de usuário" severity="alert">
-				<p:button icon="pi pi-thumbs-down" value="Não"
-					onclick="PF('confirmacaoExclusao').hide(); return false;" 
-					process="@this"/>
-				<p:commandButton icon="pi pi-thumbs-up" value="Sim" 
-				    update=":formulario:alunosTable"
-					onclick="PF('confirmacaoExclusao').hide();"
-					action="#{manterAlunoBean.excluir}"
-					process="@this"/>
-			</p:confirmDialog>	
+				<p:button icon="pi pi-thumbs-down" value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;"
+					process="@this" />
+				<p:commandButton icon="pi pi-thumbs-up" value="Sim" update=":formulario:alunosTable"
+					onclick="PF('confirmacaoExclusao').hide();" action="#{manterAlunoBean.excluir}" process="@this" />
+			</p:confirmDialog>
 
-	</h:form>
-  </ui:define>
+		</h:form>
+	</ui:define>
 </ui:composition>
