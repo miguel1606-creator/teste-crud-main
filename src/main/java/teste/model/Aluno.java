@@ -1,6 +1,7 @@
 package teste.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +33,8 @@ public class Aluno implements Serializable {
 	private Long id;	
 	private String nome;
 	private String prontuario;
-	private String sobrenome;
-	private String frase; 
+	private float salario;
+	private Date datanascimento;
+	private String telefone;
+	private Boolean ativo;
 }
